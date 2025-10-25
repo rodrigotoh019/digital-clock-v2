@@ -19,9 +19,10 @@ fonts = {
     "Round": "Bartino-Regular.ttf",
     "Sunshine": "A little sunshine.ttf"
 }
-loaded_fonts = {}
-for name, path in fonts.items():
-    if os.path.exists(path):
+
+loaded_fonts = {}   # Storing nicknames for existing paths
+for name, path in fonts.items():    # Unpacking nickname (name) and file name (path) of the font family
+    if os.path.exists(path):        # Using .path.exists() method of os to check if the path/file really exists
         font_obj = tkFont.Font(file=path, size=32)
         loaded_fonts[name] = font_obj
     else:
