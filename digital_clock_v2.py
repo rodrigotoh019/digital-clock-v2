@@ -51,4 +51,4 @@ def update_clock():
 update_clock()
 
 # Run the window
-root.________()
+root._______()
