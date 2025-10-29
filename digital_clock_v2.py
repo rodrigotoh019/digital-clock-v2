@@ -23,10 +23,10 @@ fonts = {
 loaded_fonts = {}   # Storing nicknames for existing paths
 for name, path in fonts.items():    # Unpacking nickname (name) and file name (path) of the font family
     if os.path.exists(path):        # Using .path.exists() method of os to check if the path/file really exists
-        font_obj = tkFont.Font(file=path, size=32)
-        loaded_fonts[name] = font_obj
+        font_obj = tkFont.Font(file=path, size=32)  # file=path is saying I have customized fonts at font family, and size=32 is the font size
+        loaded_fonts[name] = font_obj   # Getting the "name" or nickname of each corresponding "path" or files in font family
     else:
-        print(f"Font not found: {path}")
+        print(f"Font '{name}' not found. The file '{path}' may be missing or needs to be re-installed.")    # Error-handling message that caters for both user and dev for easier troubleshooting
 
 # Time label
 time_label = tk.Label(root, text="", font=loaded_fonts["Default"])
