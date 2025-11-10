@@ -29,7 +29,7 @@ for name, path in fonts.items():    # Unpacking nickname (name) and file name (p
         print(f"Font '{name}' not found. The file '{path}' may be missing or needs to be re-installed.")    # Error-handling message that caters for both user and dev for easier troubleshooting
 
 # Time label
-time_label = tk.Label(root, text="", font=loaded_fonts["Default"], size=32, fg="white", bg="black")
+time_label = tk.Label(root, text="", font=(loaded_fonts["Default"],32), fg="white", bg="black")
 time_label.pack(pady=(10,0))    # pady lets time widget be pushed 10 pixel down from the top of the window
 
 # Date label
@@ -39,11 +39,11 @@ date_label.pack()
 # Function to update time & date
 def update_clock():
     now = datetime.now()
-    time_str = now.strftime("hh:mm:ss")  # Hint: You want HH:MM:SS
+    time_str = now.strftime("%I:%M:%S %p")  # HH:MM:SS AM/PM
     date_str = now.strftime("%A,%B %d, %Y")  # Day, Month Day, Year
 
-    time_label.config(text=__________)
-    date_label.config(text=__________)
+    time_label.config(text=time_str)
+    date_label.config(text=date_str)
 
     root.after(1000, update_clock)
 
@@ -51,4 +51,4 @@ def update_clock():
 update_clock()
 
 # Run the window
-(root._______())
+(root.mainloop())
