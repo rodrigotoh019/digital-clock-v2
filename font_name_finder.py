@@ -13,9 +13,9 @@ fonts = {
 # Base Path
 base_path = os.path.dirname(__file__)
 
-print("=" * 50)
+print("=" * 55)
 print("FONT FAMILY NAME CHECKER")
-print("=" * 50)
+print("=" * 55)
 
 for nickname, filename in fonts.items():
     font_path = os.path.join(base_path, "assets", "fonts", filename)
@@ -30,4 +30,4 @@ for nickname, filename in fonts.items():
             print(f'\n❌ {nickname}: Error reading font - {e}')
     else:
         print(f'\n❌ {nickname}: File not found at {font_path}')
-print("=" * 50)
+print("=" * 55)
