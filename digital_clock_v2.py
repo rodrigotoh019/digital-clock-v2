@@ -4,8 +4,8 @@ import os
 from tkinter import colorchooser
 from datetime import datetime
 import pytz     # This gives us access to different timezone
-
-from Projects.digital_clock_v1.digital_clock_v1 import ph_timezone
+import pyglet   # For font registration (customized .ttf fonts)
+from fontTools.ttLib import TTFont  # Can accurately check your customized font's family name
 
 # Create main window
 root = tk.Tk()
@@ -14,7 +14,7 @@ root.geometry("300x100")  # Default size of the window
 root.resizable(True, True)  # Adjustable window
 root.attributes('-topmost', True)  # Stay on top
 
-# Font Family
+# Font Dict, font paths/file name
 fonts = {
     "Default": "DS-DIGI.TTF",
     "Squares": "square_sans_serif_7.ttf",
@@ -23,13 +23,33 @@ fonts = {
     "Sunshine": "A little sunshine.ttf"
 }
 
+# Font family, names that tkinter can read
+font_family = {
+    "Default": "DS-DIGI.TTF",
+    "Squares": "square_sans_serif_7.ttf",
+    "Comic": "Sophiecomic-Regular.ttf",
+    "Round": "Bartino-Regular.ttf",
+    "Sunshine": "A little sunshine.ttf"
+}
+
+# OS path compiler
+base_path = os.path.dirname(__file__)
+
 loaded_fonts = {}   # Storing nicknames for existing paths
-for name, path in fonts.items():    # Unpacking nickname (name) and file name (path) of the font family
-    if os.path.exists(path):        # Using .path.exists() method of os to check if the path/file really exists
-        font_obj = tkFont.Font(file=path)  # file=path is saying I have customized fonts at font family
+for name, filename in fonts.items():    # Unpacking nickname (name) and file name (path) of the font family
+    font_path = os.path.join(base_path, "assets", "fonts", filename)
+    if os.path.exists(font_path):        # Using .path.exists() method of os to check if the path/file really exists
+        pyglet.font.add_file(font_path)
+        family_name = font_family[name]
+        font_obj = tkFont.Font(family=family_name)
         loaded_fonts[name] = font_obj   # Getting the "name" or nickname of each corresponding "path" or files in font family
+        print(f"Loaded Font: {name} - {family_name}")
     else:
-        print(f"Font '{name}' not found. The file '{path}' may be missing or needs to be re-installed.")    # Error-handling message that caters for both user and dev for easier troubleshooting
+        print(f"Font '{name}' not found. The file '{filename}' may be missing or needs to be re-installed.")    # Error-handling message that caters for both user and dev for easier troubleshooting
+print("All fonts successfully loaded")
+
+# Window background
+root.config(bg="black")
 
 # Timezone label
 ph_timezone = pytz.timezone("Asia/Manila")  # Philippines Timezone
@@ -49,7 +69,7 @@ date_label.pack()
 def update_clock():
     now = datetime.now(ph_timezone)     # This clock's timezone is set as GMT+8 or PHT / You can leave it blank if you want to this to be based on the timezone of your computer
     time_str = now.strftime("%I:%M:%S %p")  # HH:MM:SS AM/PM
-    date_str = now.strftime("%A,%B %d, %Y")  # Day, Month Day, Year
+    date_str = now.strftime("%A, %B %d, %Y")  # Day, Month Day, Year
 
     # when the clock is updating, .config keeps the format of the widgets aka time and date intact
     time_label.config(text=time_str)
