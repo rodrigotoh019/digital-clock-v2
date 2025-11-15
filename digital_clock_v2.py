@@ -9,9 +9,9 @@ from fontTools.ttLib import TTFont  # Can accurately check your customized font'
 
 # Create main window
 root = tk.Tk()
-root.title("Bibi Time ❤️") # This is the name at the window when you open the .exe
-root.geometry("300x100")  # Default size of the window
-root.resizable(True, True)  # Adjustable window
+root.title("Baby-lou ❤️") # This is the name at the window when you open the .exe
+root.geometry("400x110")  # Default size of the window
+root.resizable(False, False)  # True = resizable, False = not resizable window
 root.attributes('-topmost', True)  # Stay on top
 
 # Font Dict, font paths/file name
@@ -25,11 +25,11 @@ fonts = {
 
 # Font family, names that tkinter can read
 font_family = {
-    "Default": "DS-DIGI.TTF",
-    "Squares": "square_sans_serif_7.ttf",
-    "Comic": "Sophiecomic-Regular.ttf",
-    "Round": "Bartino-Regular.ttf",
-    "Sunshine": "A little sunshine.ttf"
+    "Default": "DS-Digital",
+    "Squares": "Square Sans Serif 7",
+    "Comic": "Sophiecomic",
+    "Round": "Bartino",
+    "Sunshine": "font18"
 }
 
 # OS path compiler
@@ -56,7 +56,7 @@ ph_timezone = pytz.timezone("Asia/Manila")  # Philippines Timezone
 
 #Time and Date font
 time_font = tkFont.Font(family=loaded_fonts["Default"].actual("family"), size=32)
-date_font = tkFont.Font(family=loaded_fonts["Default"].actual("family"), size=14)
+date_font = tkFont.Font(family=loaded_fonts["Sunshine"].actual("family"), size=16)
 
 # Time and Date label
 time_label = tk.Label(root, text="", font=(time_font), fg="white", bg="black")
