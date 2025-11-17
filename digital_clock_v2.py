@@ -4,7 +4,7 @@ import os
 from tkinter import colorchooser
 from datetime import datetime
 import pytz     # This gives us access to different timezone
-import pyglet   # For font registration (customized .ttf fonts)
+import pyglet   # We're only using the font registration feature (customized .ttf fonts)
 from fontTools.ttLib import TTFont  # Can accurately check your customized font's family name
 
 # Create main window
@@ -14,33 +14,40 @@ root.geometry("400x110")  # Default size of the window
 root.resizable(False, False)  # True = resizable, False = not resizable window
 root.attributes('-topmost', True)  # Stay on top
 
-# Font Dict, font paths/file name
+# Font Dict and Family
 fonts = {
-    "Default": "DS-DIGI.TTF",
-    "Squares": "square_sans_serif_7.ttf",
-    "Comic": "Sophiecomic-Regular.ttf",
-    "Round": "Bartino-Regular.ttf",
-    "Sunshine": "A little sunshine.ttf"
-}
-
-# Font family, names that tkinter can read
-font_family = {
-    "Default": "DS-Digital",
-    "Squares": "Square Sans Serif 7",
-    "Comic": "Sophiecomic",
-    "Round": "Bartino",
-    "Sunshine": "font18"
+    "Default": {                    # Nickname/Name
+        "filename": "DS-DIGI.TTF",  # File Name/Path
+        "family": "DS-Digital",     # Family/Real Name
+    },
+    "Squares": {
+        "filename": "square_sans_serif_7.ttf",
+        "family": "Squre Sans Serif 7",
+    },
+    "Comic": {
+        "filename": "Sophiecomic-Regular.ttf",
+        "family": "Sophiecomic",
+    },
+    "Round": {
+        "filename": "Bartino-Regular.ttf",
+        "family": "Bartino",
+    },
+    "Sunshine": {
+        "filename": "A little sunshine.ttf",
+        "family": "font18",
+    }
 }
 
 # OS path compiler
 base_path = os.path.dirname(__file__)
 
 loaded_fonts = {}   # Storing nicknames for existing paths
-for name, filename in fonts.items():    # Unpacking nickname (name) and file name (path) of the font family
-    font_path = os.path.join(base_path, "assets", "fonts", filename)
-    if os.path.exists(font_path):        # Using .path.exists() method of os to check if the path/file really exists
+for name, font_data in fonts.items():   # Unpacking nickname (name) = key, and filename and family name = values of the font family
+    filename = font_data["filename"]    # Assigning filename/path value
+    family_name = font_data["family"]   # Assigning real name/family name value
+    font_path = os.path.join(base_path, "assets", "fonts", filename)    # Manually directing where to see the assets (fonts) - Relative-related path
+    if os.path.exists(font_path):       # Using .path.exists() method of os to check if the path/file really exists
         pyglet.font.add_file(font_path)
-        family_name = font_family[name]
         font_obj = tkFont.Font(family=family_name)
         loaded_fonts[name] = font_obj   # Getting the "name" or nickname of each corresponding "path" or files in font family
         print(f"Loaded Font: {name} - {family_name}")
@@ -59,10 +66,10 @@ time_font = tkFont.Font(family=loaded_fonts["Default"].actual("family"), size=32
 date_font = tkFont.Font(family=loaded_fonts["Sunshine"].actual("family"), size=16)
 
 # Time and Date label
-time_label = tk.Label(root, text="", font=(time_font), fg="white", bg="black")
+time_label = tk.Label(root, text="", font=(time_font), fg="light green", bg="black")
 time_label.pack(pady=(10,0))    # pady lets time widget be pushed 10 pixel down from the top of the window
 
-date_label = tk.Label(root, text="", font=(date_font), fg="lightgray", bg="black")
+date_label = tk.Label(root, text="", font=(date_font), fg="light green", bg="black")
 date_label.pack()
 
 # Function to update time & date
