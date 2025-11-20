@@ -1,4 +1,4 @@
-import tkinter as tk
+import customtkinter as ctk
 import tkinter.font as tkFont
 import os
 from tkinter import colorchooser
@@ -7,8 +7,12 @@ import pytz     # This gives us access to different timezone
 import pyglet   # We're only using the font registration feature (customized .ttf fonts)
 from fontTools.ttLib import TTFont  # Can accurately check your customized font's family name
 
+# Set appearance mode and color theme
+ctk.set_appearance_mode("dark")     # Options: "dark", "light", "system"
+ctk.set_default_color_theme("blue") # Options: "blue", "green", "dark-blue"
+
 # Create main window
-root = tk.Tk()
+root = ctk.CTk()
 root.title("Baby-lou ❤️") # This is the name at the window when you open the .exe
 root.geometry("400x110")  # Default size of the window
 root.resizable(False, False)  # True = resizable, False = not resizable window
@@ -55,9 +59,6 @@ for name, font_data in fonts.items():   # Unpacking nickname (name) = key, and f
         print(f"Font '{name}' not found. The file '{filename}' may be missing or needs to be re-installed.")    # Error-handling message that caters for both user and dev for easier troubleshooting
 print("All fonts successfully loaded")
 
-# Window background
-root.config(bg="black")
-
 # Timezone label
 ph_timezone = pytz.timezone("Asia/Manila")  # Philippines Timezone
 
@@ -66,10 +67,10 @@ time_font = tkFont.Font(family=loaded_fonts["Default"].actual("family"), size=32
 date_font = tkFont.Font(family=loaded_fonts["Sunshine"].actual("family"), size=16)
 
 # Time and Date label
-time_label = tk.Label(root, text="", font=(time_font), fg="light green", bg="black")
+time_label = ctk.CTkLabel(root, text="", font=time_font, text_color="light green")
 time_label.pack(pady=(10,0))    # pady lets time widget be pushed 10 pixel down from the top of the window
 
-date_label = tk.Label(root, text="", font=(date_font), fg="light green", bg="black")
+date_label = ctk.CTkLabel(root, text="", font=date_font, text_color="light green")
 date_label.pack()
 
 # Function to update time & date
