@@ -14,8 +14,8 @@ ctk.set_default_color_theme("blue") # Options: "blue", "green", "dark-blue"
 # Create main window
 root = ctk.CTk()
 root.title("Baby-lou ❤️") # This is the name at the window when you open the .exe
-root.geometry("400x110")  # Default size of the window
-root.resizable(False, False)  # True = resizable, False = not resizable window
+root.geometry("300x100")  # Default size of the window
+root.resizable(True, True)  # True = resizable, False = not resizable window
 root.attributes('-topmost', True)  # Stay on top
 
 # Font Dict and Family
@@ -63,8 +63,8 @@ print("All fonts successfully loaded")
 ph_timezone = pytz.timezone("Asia/Manila")  # Philippines Timezone
 
 #Time and Date font
-time_font = tkFont.Font(family=loaded_fonts["Default"].actual("family"), size=32)
-date_font = tkFont.Font(family=loaded_fonts["Sunshine"].actual("family"), size=16)
+time_font = (loaded_fonts["Default"].actual("family"),32)   # ctk's way of loading fonts
+date_font = (loaded_fonts["Sunshine"].actual("family"),16)
 
 # Time and Date label
 time_label = ctk.CTkLabel(root, text="", font=time_font, text_color="light green")
@@ -80,8 +80,8 @@ def update_clock():
     date_str = now.strftime("%A, %B %d, %Y")  # Day, Month Day, Year
 
     # when the clock is updating, .config keeps the format of the widgets aka time and date intact
-    time_label.config(text=time_str)
-    date_label.config(text=date_str)
+    time_label.configure(text=time_str) # from .config(), you need to change this to .configure() for ctk
+    date_label.configure(text=date_str)
 
     root.after(1000, update_clock)  # 1000ms = 1 sec. This line enable to "loop" the update_clock function every 1 second
 
