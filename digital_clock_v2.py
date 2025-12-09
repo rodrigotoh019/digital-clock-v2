@@ -6,6 +6,15 @@ from datetime import datetime
 import pytz     # This gives us access to different timezone
 import pyglet   # We're only using the font registration feature (customized .ttf fonts)
 from fontTools.ttLib import TTFont  # Can accurately check your customized font's family name
+import json
+
+# JSON file
+CONFIG_FILE = "clock_config.json"
+
+DEFAULT_CONFIG = {
+    "time_font": "Default",
+    "date_font": "Default"
+}
 
 # Set appearance mode and color theme
 ctk.set_appearance_mode("dark")     # Options: "dark", "light", "system"
@@ -42,6 +51,24 @@ fonts = {
     }
 }
 
+# Load function
+def load_setting():
+    if os.path.exists(CONFIG_FILE):
+        try:
+            with open(CONFIG_FILE, "r") as f:
+                return json.load(f)
+        except:
+            print("Error loading config, using defaults")
+            return DEFAULT_CONFIG.copy()
+    else:
+        return DEFAULT_CONFIG.copy()
+
+# Save function
+def save_settings(config):
+    with open(CONFIG_FILE, "w") as f:
+        json.dump(config, f, indent=4)
+    print(f"Saved: {config}")
+
 # OS path compiler
 base_path = os.path.dirname(__file__)
 
@@ -75,6 +102,7 @@ def change_time_fonts(direction):
     font_nicknames = font_names[current_time_font_index]
     font_family = loaded_fonts[font_nicknames].actual("family")
     time_label.configure(font=(font_family, 32))
+    config["time_font"] = font_nicknames
     print(f"Time changed to: {font_nicknames}")
 
 # Changing date fonts
@@ -87,7 +115,22 @@ def change_date_fonts(direction):
     font_nicknames = font_names[current_date_font_index]
     font_family = loaded_fonts[font_nicknames].actual("family")
     date_label.configure(font=(font_family, 16))
+    config["date_font"] = font_nicknames
     print(f"Date changed to: {font_nicknames}")
+
+# Load user's saved settings
+config = load_setting()
+
+# Set initial font indices based on config
+try:
+    current_time_font_index = font_names.index(config["time_font"])
+except:
+    current_time_font_index = 0
+
+try:
+    current_date_font_index = font_names.index(config["date_font"])
+except:
+    current_date_font_index = 0
 
 # Time arrows
 time_left = ctk.CTkButton(root, text="<", width=20, command=lambda: change_time_fonts("prev"))
@@ -105,16 +148,25 @@ date_right.place(x=245, y=62)
 # Timezone label
 ph_timezone = pytz.timezone("Asia/Manila")  # Philippines Timezone
 
-#Time and Date font
-time_font = (loaded_fonts["Default"].actual("family"),32)   # ctk's way of loading fonts
-date_font = (loaded_fonts["Sunshine"].actual("family"),16)
+#Time and Date font and label
+time_font_name = font_names[current_time_font_index]
+date_font_name = font_names[current_date_font_index]
 
-# Time and Date label
-time_label = ctk.CTkLabel(root, text="", font=time_font, text_color="light green")
-time_label.pack(pady=(10,0))    # pady lets time widget be pushed 10 pixel down from the top of the window
+time_label = ctk.CTkLabel(
+    root,
+    text="",
+    font=(loaded_fonts[time_font_name].actual("family"), 32),
+    text_color="light green"
+)
+time_label.pack(pady=(10,0))
 
-date_label = ctk.CTkLabel(root, text="", font=date_font, text_color="light green")
-date_label.pack(pady=(20,0))
+date_label = ctk.CTkLabel(
+    root,
+    text="",
+    font=(loaded_fonts[date_font_name].actual("family"), 16),
+    text_color="light green"
+)
+date_label.pack(pady=(18,0))
 
 # Function to update time & date
 def update_clock():
