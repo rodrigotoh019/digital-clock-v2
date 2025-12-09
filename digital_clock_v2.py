@@ -16,6 +16,26 @@ DEFAULT_CONFIG = {
     "date_font": "Default"
 }
 
+# Load function
+def load_setting():
+    if os.path.exists(CONFIG_FILE):
+        print(f"Config file found:{CONFIG_FILE}")
+        try:
+            with open(CONFIG_FILE, "r") as f:
+                return json.load(f)
+        except:
+            print("Error loading config, using defaults")
+            return DEFAULT_CONFIG.copy()
+    else:
+        print("No config file, using defaults")
+        return DEFAULT_CONFIG.copy()
+
+# Save function
+def save_settings(config):
+    with open(CONFIG_FILE, "w") as f:
+        json.dump(config, f, indent=4)
+    print(f"Saved: {config}")
+
 # Set appearance mode and color theme
 ctk.set_appearance_mode("dark")     # Options: "dark", "light", "system"
 ctk.set_default_color_theme("blue") # Options: "blue", "green", "dark-blue"
@@ -51,24 +71,6 @@ fonts = {
     }
 }
 
-# Load function
-def load_setting():
-    if os.path.exists(CONFIG_FILE):
-        try:
-            with open(CONFIG_FILE, "r") as f:
-                return json.load(f)
-        except:
-            print("Error loading config, using defaults")
-            return DEFAULT_CONFIG.copy()
-    else:
-        return DEFAULT_CONFIG.copy()
-
-# Save function
-def save_settings(config):
-    with open(CONFIG_FILE, "w") as f:
-        json.dump(config, f, indent=4)
-    print(f"Saved: {config}")
-
 # OS path compiler
 base_path = os.path.dirname(__file__)
 
@@ -103,6 +105,7 @@ def change_time_fonts(direction):
     font_family = loaded_fonts[font_nicknames].actual("family")
     time_label.configure(font=(font_family, 32))
     config["time_font"] = font_nicknames
+    save_settings(config)
     print(f"Time changed to: {font_nicknames}")
 
 # Changing date fonts
@@ -116,6 +119,7 @@ def change_date_fonts(direction):
     font_family = loaded_fonts[font_nicknames].actual("family")
     date_label.configure(font=(font_family, 16))
     config["date_font"] = font_nicknames
+    save_settings(config)
     print(f"Date changed to: {font_nicknames}")
 
 # Load user's saved settings
