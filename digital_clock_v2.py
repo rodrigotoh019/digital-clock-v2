@@ -1,11 +1,9 @@
 import customtkinter as ctk     # More flexible and modern tkinter
 import tkinter.font as tkFont   # To be able to use text in a tkinter window
 import os
-from tkinter import colorchooser
 from datetime import datetime
 import pytz     # This gives us access to different timezone
 import pyglet   # We're only using the font registration feature (customized .ttf fonts)
-from fontTools.ttLib import TTFont  # Can accurately check your customized font's family name
 import json
 
 # JSON file
@@ -31,7 +29,7 @@ def load_setting():
         return DEFAULT_CONFIG.copy()
 
 # Save function
-def save_settings(config):
+def save_setting(config):
     with open(CONFIG_FILE, "w") as f:
         json.dump(config, f, indent=4)
     print(f"Saved: {config}")
@@ -55,7 +53,7 @@ fonts = {
     },
     "Squares": {
         "filename": "square_sans_serif_7.ttf",
-        "family": "Squre Sans Serif 7",
+        "family": "Square Sans Serif 7",
     },
     "Comic": {
         "filename": "Sophiecomic-Regular.ttf",
@@ -105,7 +103,7 @@ def change_time_fonts(direction):
     font_family = loaded_fonts[font_nicknames].actual("family")
     time_label.configure(font=(font_family, 32))
     config["time_font"] = font_nicknames
-    save_settings(config)
+    save_setting(config)
     print(f"Time changed to: {font_nicknames}")
 
 # Changing date fonts
@@ -119,7 +117,7 @@ def change_date_fonts(direction):
     font_family = loaded_fonts[font_nicknames].actual("family")
     date_label.configure(font=(font_family, 16))
     config["date_font"] = font_nicknames
-    save_settings(config)
+    save_setting(config)
     print(f"Date changed to: {font_nicknames}")
 
 # Load user's saved settings
@@ -135,19 +133,6 @@ try:
     current_date_font_index = font_names.index(config["date_font"])
 except:
     current_date_font_index = 0
-
-# Time arrows
-time_left = ctk.CTkButton(root, text="<", width=20, command=lambda: change_time_fonts("prev"))
-time_left.place(x=10, y=15)
-time_right = ctk.CTkButton(root, text=">", width=20, command=lambda: change_time_fonts("next"))
-time_right.place(x=245, y=15)
-
-# Date arrows
-date_left = ctk.CTkButton(root, text="<", width=20, command=lambda: change_date_fonts("prev"))
-date_left.place(x=10, y=62)
-date_right = ctk.CTkButton(root, text=">", width=20, command=lambda: change_date_fonts("next"))
-date_right.place(x=245, y=62)
-
 
 # Timezone label
 ph_timezone = pytz.timezone("Asia/Manila")  # Philippines Timezone
@@ -171,6 +156,18 @@ date_label = ctk.CTkLabel(
     text_color="light green"
 )
 date_label.pack(pady=(18,0))
+
+# Time arrows
+time_left = ctk.CTkButton(root, text="<", width=20, command=lambda: change_time_fonts("prev"))
+time_left.place(x=10, y=15)
+time_right = ctk.CTkButton(root, text=">", width=20, command=lambda: change_time_fonts("next"))
+time_right.place(x=245, y=15)
+
+# Date arrows
+date_left = ctk.CTkButton(root, text="<", width=20, command=lambda: change_date_fonts("prev"))
+date_left.place(x=10, y=62)
+date_right = ctk.CTkButton(root, text=">", width=20, command=lambda: change_date_fonts("next"))
+date_right.place(x=245, y=62)
 
 # Function to update time & date
 def update_clock():
