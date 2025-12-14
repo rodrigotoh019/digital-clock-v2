@@ -41,7 +41,7 @@ ctk.set_default_color_theme("blue") # Options: "blue", "green", "dark-blue"
 # Create main window
 root = ctk.CTk()
 root.title("Baby-lou ❤️") # This is the name at the window when you open the .exe
-root.geometry("280x100")  # Default size of the window
+root.geometry("300x100")  # Default size of the window
 root.resizable(False, False)  # True = resizable, False = not resizable window
 root.attributes('-topmost', True)  # Stay on top
 
@@ -50,10 +50,6 @@ fonts = {
     "Default": {                    # Nickname/Name
         "filename": "DS-DIGI.TTF",  # File Name/Path
         "family": "DS-Digital",     # Family/Real Name
-    },
-    "Squares": {
-        "filename": "square_sans_serif_7.ttf",
-        "family": "Square Sans Serif 7",
     },
     "Comic": {
         "filename": "Sophiecomic-Regular.ttf",
@@ -94,7 +90,7 @@ current_date_font_index = 0
 
 # Changing time fonts
 def change_time_fonts(direction):
-    global current_time_font_index
+    global current_time_font_index, config
     if direction == "next":
         current_time_font_index = (current_time_font_index + 1) % len(font_names)
     else:
@@ -108,7 +104,7 @@ def change_time_fonts(direction):
 
 # Changing date fonts
 def change_date_fonts(direction):
-    global current_date_font_index
+    global current_date_font_index, config
     if direction == "next":
         current_date_font_index = (current_date_font_index + 1) % len(font_names)
     else:
@@ -122,6 +118,9 @@ def change_date_fonts(direction):
 
 # Load user's saved settings
 config = load_setting()
+print(f"Loaded config: {config}")
+print(f"Time font will be: {config['time_font']}")
+print(f"Date font will be: {config['date_font']}")
 
 # Set initial font indices based on config
 try:
@@ -141,6 +140,11 @@ ph_timezone = pytz.timezone("Asia/Manila")  # Philippines Timezone
 time_font_name = font_names[current_time_font_index]
 date_font_name = font_names[current_date_font_index]
 
+print(f"Time index: {current_time_font_index}")
+print(f"Date index: {current_date_font_index}")
+print(f"Time font name: {time_font_name}")
+print(f"Date font name: {date_font_name}")
+
 time_label = ctk.CTkLabel(
     root,
     text="",
@@ -159,15 +163,15 @@ date_label.pack(pady=(18,0))
 
 # Time arrows
 time_left = ctk.CTkButton(root, text="<", width=20, command=lambda: change_time_fonts("prev"))
-time_left.place(x=10, y=15)
+time_left.place(x=10, y=13)
 time_right = ctk.CTkButton(root, text=">", width=20, command=lambda: change_time_fonts("next"))
-time_right.place(x=245, y=15)
+time_right.place(x=269, y=13)
 
 # Date arrows
 date_left = ctk.CTkButton(root, text="<", width=20, command=lambda: change_date_fonts("prev"))
 date_left.place(x=10, y=62)
 date_right = ctk.CTkButton(root, text=">", width=20, command=lambda: change_date_fonts("next"))
-date_right.place(x=245, y=62)
+date_right.place(x=269, y=62)
 
 # Function to update time & date
 def update_clock():

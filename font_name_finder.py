@@ -4,7 +4,6 @@ from fontTools.ttLib import TTFont
 # Font Dictionary
 fonts = {
     "Default": "DS-DIGI.TTF",
-    "Squares": "square_sans_serif_7.ttf",
     "Comic": "Sophiecomic-Regular.ttf",
     "Round": "Bartino-Regular.ttf",
     "Sunshine": "A little sunshine.ttf"
