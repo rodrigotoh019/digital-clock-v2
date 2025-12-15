@@ -36,7 +36,13 @@ The app shows the current **time and date in Asia/Manila (GMT+8)**, with simple 
   - Time & date text in light green
 
 ---
+## 📥 Download
 
+For Windows users (no Python required):
+
+👉 [Download the latest Baby-lou Clock (.exe)](https://github.com/rodrigotoh019/digital-clock-v2/releases/tag/v1.0.0)
+
+---
 ## 📂 Project Structure
 
 ```text
@@ -85,8 +91,8 @@ The clock window should appear, always on top, showing PH time and date. `<` /`>
 
 ---
 ## 💻 Windows Executable (Non-dev Friendly)
-If you've built and uploaded a `Baby-lou CLock.exe` to a GitHub Release:
-1. Download `Baby-lou Clock.exe` from **Releases** section.
+
+1. Download [Baby-lou Clock.exe](https://github.com/rodrigotoh019/digital-clock-v2/releases/tag/v1.0.0) from **Releases** section.
 2. Place it in a folder where it can create/write `clock_config.json`.
 3. Double-click the `.exe`, copy `clock_config.json` with it to keep your saved preferences.
 
