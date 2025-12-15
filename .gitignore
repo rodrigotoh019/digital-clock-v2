@@ -1,9 +1,24 @@
+# Python cache
 __pycache__/
 *.py[cod]
+
+# Virtual env
 venv/
+
+# Environment / editor
 .env/
 .idea/
 .vscode/
 .DS_Store
 *.log
+
+# Local config (if you use this name)
 config.json
+
+# Build artifacts (PyInstaller etc.)
+build/
+dist/
+*.exe
+*.zip
+*.spec
+clock_config.json

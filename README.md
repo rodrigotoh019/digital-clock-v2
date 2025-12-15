@@ -1,78 +1,54 @@
-# 🕰️ Digital Clock v2 – Tkinter Edition
+# 🕰️ Baby-lou Clock – Digital Clock v2
 
-A customizable digital clock app built using Python's Tkinter GUI library. Designed for simplicity, customization, and future extensibility.
+A small always-on-top desktop clock built with Python, [CustomTkinter](https://github.com/TomSchimansky/CustomTkinter), and a set of custom fonts.
 
----
-
-## ✨ Features (v2 – In Progress)
-
-* ⏰ **12-hour time format with AM/PM indicator**
-* 🖋️ **Custom font support** using `.ttf` files
-* 📂 **Font loader** with friendly-named dictionary (e.g., "Comic", "Digital")
-* ⚠️ **Missing font fallback**: alerts dev and uses default font
-* 🖍️ **Scalable font sizing** (presets per widget planned)
-* 🎨 **UI customization groundwork** (color, background, layout presets)
-* 📐 Resizable and always-on-top toggle (coming soon)
+The app shows the current **time and date in Asia/Manila (GMT+8)**, with simple controls to switch fonts for the time and date separately. User choices are saved so your preferred look is restored on every launch.
 
 ---
 
-## 🚧 Planned Features (v2.x – Post-Release)
+## ✨ Current Features
 
-* 🎚️ Font size presets: Small, Medium, Large
-* 🧭 Layout presets: date below, left/right aligned, centered
-* 🌈 Background customization (solid colors or image uploads)
-* 🖍️ Font color selector (basic palette)
-* 🎨 Theme presets: Modern, Retro, Neon, Minimalist
-* 👀 **Font Tester** GUI (preview fonts/sizes before applying)
-* 🧪 `try-except` logic for robust font loading
-* 📘 User-friendly error prompts and troubleshooting guide
-
----
-
-## 🌟 Future Features (v3+ Wishlist)
-
-> Ambitious upgrades for full customization and smart features.
-
-* ⏸️ Pause/Resume time display
-* ⏰ Basic alarm or reminder alerts
-* 🌗 Light/Dark theme toggle
-* 🖱️ Drag-and-drop layout positioning
-* 📱 Mobile app or network control panel
-* 📸 Export layout as image / screenshot
-* 🔧 Settings editor GUI (font, color, layout, themes)
-
----
-
-## 📌 What's New (v2 Highlights)
-
-* ✅ Switched from 24-hour to **12-hour time**
-* ✅ Integrated **named font loading** system
-* ✅ Added initial **fallback handling** for missing fonts
-* ✅ Structured code for layout and theme customization
-* ✅ Planned v2.x & v3 features based on feedback & future vision
+- ⏰ **12-hour time format** (HH:MM:SS AM/PM)
+- 📅 **Full date display**  
+  `Day, Month DD, YYYY` (for example: `Monday, January 01, 2025`)
+- 🌏 **Timezone fixed to Asia/Manila (Philippines)**  
+  Great for a “desk clock” on a secondary monitor.
+- 🖋️ **Custom fonts for time and date**
+  - Fonts loaded from `assets/fonts/`
+  - Currently included:
+    - `Default` → `DS-DIGI.TTF` (digital clock style)
+    - `Comic` → `Sophiecomic-Regular.ttf`
+    - `Round` → `Bartino-Regular.ttf`
+    - `Sunshine` → `A little sunshine.ttf`
+- 🔁 **Per-widget font switching**
+  - Change **time font** with the top `<` / `>` buttons
+  - Change **date font** with the bottom `<` / `>` buttons
+- 💾 **Settings persistence**
+  - Selected time font and date font are stored in `clock_config.json`
+  - On next launch, the app restores your last-used fonts automatically
+- 🧱 **Simple, compact window**
+  - Title: `Baby-lou ❤️`
+  - Default size: `300 x 100`
+  - Non-resizable
+  - Always on top of other windows
+- 🎨 **Dark theme**
+  - CustomTkinter dark mode
+  - Time & date text in light green
 
 ---
 
-## 📦 Requirements
+## 📂 Project Structure
 
-Install dependencies with:
-
-```bash
-pip install -r requirements.txt
-```
-
----
-
-## 🧠 Notes for Developers
-
-* Font files should be placed in the same directory or a dedicated `/fonts/` folder
-* New fonts must be added to the `fonts = {}` dictionary using a friendly key name
-* Error handling is logged for developer debugging; future versions will include user prompts
-
----
-
-## 🙌 Credits
-
-Created with Python, Tkinter, and way too much coffee ☕
-
-Mentored and guided by **Beemo**, your AI coding buddy 💡
+```text
+digital_clock_v2/
+├─ assets/
+│  └─ fonts/
+│     ├─ A little sunshine.ttf
+│     ├─ Bartino-Regular.ttf
+│     ├─ DS-DIGI.TTF
+│     └─ Sophiecomic-Regular.ttf
+├─ clock_config.json       # Created/updated at runtime (user font choices)
+├─ digital_clock_v2.py     # Main application
+├─ font_name_finder.py     # Helper script (optional)
+├─ requirements.txt
+└─ README.md
