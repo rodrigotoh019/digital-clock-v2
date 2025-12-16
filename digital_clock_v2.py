@@ -5,6 +5,7 @@ from datetime import datetime
 import pytz     # This gives us access to different timezone
 import pyglet   # We're only using the font registration feature (customized .ttf fonts)
 import json
+import sys
 
 # JSON file
 CONFIG_FILE = "clock_config.json"
@@ -66,7 +67,10 @@ fonts = {
 }
 
 # OS path compiler
-base_path = os.path.dirname(__file__)
+if getattr(sys, 'frozen', False):
+    base_path = sys._MEIPASS
+else:
+    base_path = os.path.dirname(__file__)
 
 loaded_fonts = {}   # Storing nicknames for existing paths
 for name, font_data in fonts.items():   # Unpacking nickname (name) = key, and filename and family name = values of the font family
