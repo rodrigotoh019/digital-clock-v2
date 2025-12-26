@@ -227,7 +227,7 @@ def register_font_with_windows(font_path):
 
         # AddFontResourcesEx function
         # Returns number of fonts added (0 = failure)
-        num_fonts = gdi32.AddFontResourcesExW(
+        num_fonts = gdi32.AddFontResourceExW(
             font_path,
             FR_PRIVATE,
             0
